@@ -8,7 +8,6 @@
     },
     "dashboard": {
       "root": "frontend",
-      "framework": "other",
       "outputDirectory": "."
     },
     "traffic-intelligence": {
