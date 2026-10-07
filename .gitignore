@@ -46,3 +46,7 @@ weights/
 .DS_Store
 Thumbs.db
 
+# Local archives and generated frontend bundles
+*.zip
+etris-traffic-intelligence/dist/
+-Recurse

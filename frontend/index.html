@@ -120,7 +120,7 @@
         <circle cx="12" cy="17" r="1"/>
       </svg>
     </span>
-    <span>Alert Centre</span>
+    <span>Alert Centre</span><span id="criticalAlertBadge" class="critical-alert-badge" hidden>0</span>
   </button>
 
 </nav>
@@ -138,10 +138,15 @@
         <h1 id="pageTitle" tabindex="-1">Overview</h1>
       </div>
       <div class="top-actions">
+        <button id="alertSoundToggle" class="sound-toggle" type="button">🔊 ALERT SOUND: ENABLE</button>
         <span class="system-pill" id="backendPill"><span class="dot"></span> Backend checking…</span>
         <span class="date-pill" id="dataModePill">BACKEND-CONNECTED UI</span>
       </div>
     </header>
+    <aside id="criticalAccidentBanner" class="critical-accident-banner" hidden role="alert">
+      <div><strong>⚠ CRITICAL ACCIDENT DETECTED</strong><span id="criticalAccidentDetails"></span></div>
+      <div><button id="bannerEvidenceButton" type="button">VIEW EVIDENCE</button><button id="bannerDismissButton" type="button">DISMISS</button></div>
+    </aside>
 
     <section id="overview" class="page active">
       <div class="page-toolbar"><div><h2>City at a glance</h2><p>Traffic, camera health and priority events in one workspace.</p></div><span class="context-label" id="overviewMode">LIVE BACKEND DATA WHERE AVAILABLE</span></div>
@@ -195,6 +200,13 @@
   </div>
 
   <div class="anpr-dashboard">
+    <div class="video-source-selector" data-video-pipeline="anpr">
+      <input type="file" accept=".mp4,.mov,.avi,.mkv,video/*" hidden>
+      <button type="button" class="secondary-btn video-add-button">+ Add Video</button>
+      <div class="video-selection" hidden><span>Selected: <b class="video-selected-name"></b></span><small class="video-job-state">Ready</small></div>
+      <button type="button" class="primary-btn video-run-button" hidden>Run Analysis</button>
+      <button type="button" class="secondary-btn video-change-button" hidden>Change Video</button>
+    </div>
     <div class="panel anpr-live-panel">
       <div class="anpr-panel-top">
         <div class="anpr-live-heading"><span class="anpr-live-dot"></span><div><h3 id="anprFeedTitle">ANPR FEED · CONNECTING</h3><small id="feedCam">Backend stream</small></div></div>
@@ -314,6 +326,13 @@
   </div>
 </section>
     <section id="analytics" class="page">
+  <div class="video-source-selector" data-video-pipeline="traffic_analytics">
+    <input type="file" accept=".mp4,.mov,.avi,.mkv,video/*" hidden>
+    <button type="button" class="secondary-btn video-add-button">+ Add Video</button>
+    <div class="video-selection" hidden><span>Selected: <b class="video-selected-name"></b></span><small class="video-job-state">Ready</small></div>
+    <button type="button" class="primary-btn video-run-button" hidden>Run Analysis</button>
+    <button type="button" class="secondary-btn video-change-button" hidden>Change Video</button>
+  </div>
   <div class="page-toolbar">
     <div>
       <h2>Traffic Analytics</h2>
@@ -343,6 +362,50 @@
     </div>
   </div>
 
+  <div class="panel traffic-model-panel">
+    <div class="panel-head">
+      <div><h2>Vehicle Detection &amp; Tracking</h2><p>Annotated model output synchronized with traffic intelligence metrics</p></div>
+      <span class="badge clear" id="trafficPipelineStatus">LOADING</span>
+    </div>
+    <div class="traffic-model-layout">
+      <div class="traffic-video-wrap">
+        <video id="trafficIntelligenceVideo" controls muted autoplay loop playsinline preload="auto">Your browser does not support MP4 video playback.</video>
+        <p id="trafficVideoFallback">Loading annotated vehicle tracking video...</p>
+      </div>
+      <div class="traffic-model-metrics">
+        <div><span>Unique tracked</span><strong id="trafficTrackedVehicles">—</strong></div>
+        <div><span>Active vehicles</span><strong id="trafficActiveVehicles">—</strong></div>
+        <div><span>Cars</span><strong id="trafficCars">—</strong></div>
+        <div><span>Motorcycles</span><strong id="trafficMotorcycles">—</strong></div>
+        <div><span>Queue length</span><strong id="trafficQueue">—</strong></div>
+        <div><span>Occupancy</span><strong id="trafficOccupancy">—</strong></div>
+        <div class="traffic-wide-metric"><span>Priority phase</span><strong id="trafficSignalPhase">—</strong></div>
+        <div class="traffic-wide-metric"><span>Video time</span><strong id="trafficVideoTime">0.0 s</strong></div>
+      </div>
+    </div>
+    <div class="traffic-pipeline-strip"><b>BMD-45 VEHICLE DETECTION</b><span>→</span><b>TRAFFIC BYTE TRACKER</b><span>→</span><b>SYNCHRONIZED TRAFFIC METRICS</b></div>
+  </div>
+
+  <div class="panel traffic-model-panel">
+    <div class="panel-head">
+      <div><h2>Traffic Metrics Playback</h2><p>Second synchronized view of the annotated camera feed</p></div>
+      <span class="badge clear" id="trafficPipelineStatus2">LOADING</span>
+    </div>
+    <div class="traffic-model-layout">
+      <div class="traffic-video-wrap">
+        <video id="trafficIntelligenceVideo2" controls muted autoplay loop playsinline preload="auto">Your browser does not support MP4 video playback.</video>
+        <p id="trafficVideoFallback2">Loading traffic metrics video...</p>
+      </div>
+      <div class="traffic-model-metrics">
+        <div><span>Density</span><strong id="trafficDensity2">—</strong></div>
+        <div><span>Volume</span><strong id="trafficVolume2">—</strong></div>
+        <div><span>No. of cars</span><strong id="trafficCars2">—</strong></div>
+        <div><span>No. of buses</span><strong id="trafficBuses2">—</strong></div>
+        <div class="traffic-wide-metric"><span>Video time</span><strong id="trafficVideoTime2">0.0 s</strong></div>
+      </div>
+    </div>
+  </div>
+
   <div class="chart-grid">
     <div class="panel chart-card">
       <div class="panel-head">
@@ -363,14 +426,15 @@
       </div>
 
       <div class="donut-wrap">
-        <div class="donut" role="img" aria-label="Cars 42%, bikes 31%, buses 8%, trucks 11%, autos 8%"></div>
+        <div class="donut" id="vehicleTypeDonut" data-total="—" role="img" aria-label="Detected vehicle type distribution"></div>
 
-        <div class="chart-legend">
-          <p><i></i> Car <b>42%</b></p>
-          <p><i></i> Bike <b>31%</b></p>
-          <p><i></i> Bus <b>8%</b></p>
-          <p><i></i> Truck <b>11%</b></p>
-          <p><i></i> Auto <b>8%</b></p>
+        <div class="chart-legend" id="vehicleTypeLegend">
+          <p><i></i> Car <b>—</b></p>
+          <p><i></i> Motorcycle <b>—</b></p>
+          <p><i></i> Bus <b>—</b></p>
+          <p><i></i> Truck <b>—</b></p>
+          <p><i></i> Auto <b>—</b></p>
+          <p><i></i> Other <b>—</b></p>
         </div>
       </div>
     </div>
@@ -418,14 +482,72 @@
     </section>
 
     <section id="alerts" class="page">
+      <div class="video-source-selector" data-video-pipeline="alerts">
+        <input type="file" accept=".mp4,.mov,.avi,.mkv,video/*" hidden>
+        <button type="button" class="secondary-btn video-add-button">+ Add Video</button>
+        <div class="video-selection" hidden><span>Selected: <b class="video-selected-name"></b></span><small class="video-job-state">Ready</small></div>
+        <button type="button" class="primary-btn video-run-button" hidden>Run Analysis</button>
+        <button type="button" class="secondary-btn video-change-button" hidden>Change Video</button>
+      </div>
+      <section class="panel parking-intelligence-panel" aria-labelledby="parkingIntelligenceTitle">
+        <div class="panel-head"><div><h2 id="parkingIntelligenceTitle">RESTRICTED PARKING INTELLIGENCE</h2><p>Persistent image-space occupancy on policy-defined restricted surfaces</p></div><span class="badge warning">WARNING MONITOR</span></div>
+        <div class="parking-summary-grid">
+          <div><span>DETECTED VIOLATIONS</span><strong id="parkingViolationCount">0</strong></div>
+          <div><span>ACTIVE VIOLATIONS</span><strong id="parkingActiveCount">0</strong></div>
+          <div><span>LATEST VEHICLE ID</span><strong id="parkingLatestVehicle">—</strong></div>
+          <div><span>LONGEST VIOLATION</span><strong id="parkingLongestDuration">—</strong></div>
+        </div>
+        <div class="parking-occupancy-meter"><div><span>IMAGE-SPACE RESTRICTED-ZONE OCCUPANCY</span><strong id="parkingOccupancyValue">—</strong></div><div class="parking-scale"><span>0%</span><span>50%</span><span>100%</span></div><div class="parking-track"><i id="parkingOccupancyFill"></i></div></div>
+      </section>
+      <section id="accidentEvidencePanel" class="panel accident-evidence-panel" aria-labelledby="accidentEvidencePanelTitle">
+        <div class="panel-head"><div><h2 id="accidentEvidencePanelTitle">ACCIDENT DETECTION / EVIDENCE</h2><p>YOLO11x accident inference with temporal and geometry fusion</p></div><span id="accidentPanelStatus" class="badge clear">MONITORING</span></div>
+        <div class="accident-evidence-layout">
+          <div class="accident-video-wrap">
+            <video id="accidentPanelVideo" controls preload="metadata" playsinline></video>
+            <p id="accidentVideoStatus" class="accident-video-status">Loading accident evidence…</p>
+          </div>
+          <div class="accident-metrics">
+            <div><span>STATE</span><strong id="accidentPanelState">MONITORING</strong></div>
+            <div><span>FUSED SCORE</span><strong id="accidentPanelScore">—</strong></div>
+            <div><span>MODEL CONFIDENCE</span><strong id="accidentPanelConfidence">—</strong></div>
+            <div><span>CAMERA / SOURCE</span><strong id="accidentPanelCamera">—</strong></div>
+            <div><span>INCIDENT TIME</span><strong id="accidentPanelTime">—</strong></div>
+            <div><span>ALERT THRESHOLD</span><strong>75 / 100</strong></div>
+            <div class="accident-score-meter"><div class="score-scale"><span>0</span><span>75 CRITICAL</span><span>100</span></div><div class="score-track"><i id="accidentScoreFill"></i><b aria-hidden="true"></b></div></div>
+            <p id="accidentPanelMessage" class="accident-panel-message">Awaiting accident detection event</p>
+          </div>
+        </div>
+        <div class="accident-pipeline-strip"><span>ACCIDENT VIDEO</span><b>→</b><span>YOLO11x MODEL</span><b>→</b><span>TEMPORAL + GEOMETRY</span><b>→</b><span>FUSED SCORE</span><b>→</b><span>CRITICAL ALERT &gt;75</span></div>
+      </section>
+      <section id="accidentEvidencePanel2" class="panel accident-evidence-panel critical" aria-labelledby="accidentEvidencePanelTitle2">
+        <div class="panel-head"><div><h2 id="accidentEvidencePanelTitle2">ACCIDENT DETECTION / EVIDENCE 2</h2><p>accident_2.mp4 · processed by YOLO11x with temporal and geometry fusion</p></div><span id="accidentPanelStatus2" class="badge danger">ACCIDENT CONFIRMED</span></div>
+        <div class="accident-evidence-layout">
+          <div class="accident-video-wrap">
+            <video id="accidentPanelVideo2" controls muted autoplay loop preload="auto" playsinline></video>
+            <p id="accidentVideoStatus2" class="accident-video-status">Loading second accident evidence...</p>
+          </div>
+          <div class="accident-metrics">
+            <div><span>STATE</span><strong id="accidentPanelState2">ACCIDENT CONFIRMED</strong></div>
+            <div><span>FUSED SCORE</span><strong id="accidentPanelScore2">89.58 / 100</strong></div>
+            <div><span>MODEL CONFIDENCE</span><strong id="accidentPanelConfidence2">83.96%</strong></div>
+            <div><span>CAMERA / SOURCE</span><strong>ACCIDENT-CAM-02</strong></div>
+            <div><span>INCIDENT TIME</span><strong id="accidentPanelTime2">2.40 s</strong></div>
+            <div><span>ALERT THRESHOLD</span><strong>75 / 100</strong></div>
+            <div class="accident-score-meter"><div class="score-scale"><span>0</span><span>75 CRITICAL</span><span>100</span></div><div class="score-track"><i id="accidentScoreFill2" style="width:89.58%"></i><b aria-hidden="true"></b></div></div>
+            <p id="accidentPanelMessage2" class="accident-panel-message">Critical accident confirmed at frame 72 · vehicle tracks 7 and 2</p>
+          </div>
+        </div>
+        <div class="accident-pipeline-strip"><span>ACCIDENT_2 VIDEO</span><b>→</b><span>YOLO11x MODEL</span><b>→</b><span>TEMPORAL + GEOMETRY</span><b>→</b><span>FUSED 89.58</span><b>→</b><span>ACCIDENT CONFIRMED</span></div>
+      </section>
       <div class="page-toolbar"><div><h2>Alert Centre</h2><p>Backend alert lifecycle and operational review</p></div><div class="tabs"><button class="tab active" data-filter="all">All</button><button class="tab" data-filter="critical">Critical Alerts</button><button class="tab" data-filter="warning">Warnings</button><button class="tab" data-filter="resolved">Resolved</button></div></div>
       <div class="alerts-grid" id="alertsGrid"><p class="empty-state">Loading alerts from backend…</p></div>
     </section>
   </main>
 
   <div class="modal-backdrop" id="modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalText"><button class="modal-close" aria-label="Close dialog" onclick="closeModal()">×</button><h2 id="modalTitle"></h2><p id="modalText"></p><button class="primary-btn" onclick="closeModal()">Close</button></div></div>
-  <script src="js/api.js?v=20260908-anubhav3"></script>
+  <div class="modal-backdrop" id="accidentEvidenceModal"><div class="modal accident-evidence-modal" role="dialog" aria-modal="true" aria-labelledby="accidentEvidenceTitle"><button class="modal-close" aria-label="Close evidence" id="closeAccidentEvidence">×</button><h2 id="accidentEvidenceTitle">Accident Evidence</h2><video id="accidentEvidenceVideo" controls preload="metadata"></video><div id="accidentEvidenceDetails" class="evidence-details"></div></div></div>
+  <script src="js/api.js?v=20260910-video-upload"></script>
   <script src="js/app.js?v=20260908-anubhav3"></script>
-  <script src="js/live.js?v=20260908-stream-reconnect1"></script>
+  <script src="js/live.js?v=20260910-video-upload"></script>
 </body>
 </html>

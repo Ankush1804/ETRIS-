@@ -1,13 +1,16 @@
 """Stage 12A restricted-parking video demo using the existing traffic stack."""
 import argparse
 import json
+import subprocess
 import sys
 import time
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import cv2
+import imageio_ffmpeg
 import numpy as np
+import requests
 
 ROOT=Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
@@ -32,8 +35,31 @@ def options():
     parser.add_argument("--output-dir",default=str(ROOT/"runs/restricted_parking_demo")); parser.add_argument("--max-frames",type=int)
     parser.add_argument("--device",default="cuda"); parser.add_argument("--imgsz",type=int,default=960); parser.add_argument("--calibration-preview",action="store_true")
     parser.add_argument("--hide-restricted-zones",action="store_true"); parser.add_argument("--no-display",action="store_true"); parser.add_argument("--write-video",action="store_true")
+    parser.add_argument("--backend-url",default="http://127.0.0.1:8000"); parser.add_argument("--no-publish",action="store_true")
     parser.add_argument("--show-semantic-mask",action="store_true"); parser.add_argument("--show-policy-mask",action="store_true"); parser.add_argument("--show-restricted-mask",action="store_true")
     return parser.parse_args()
+
+
+class ParkingPublisher:
+    """Publish one create and one clear per camera/zone/track episode."""
+    def __init__(self,backend_url,enabled=True):
+        self.url=backend_url.rstrip("/")+"/api/alerts/restricted-parking"; self.enabled=enabled; self.active=set(); self.results={}
+
+    def observe(self,event,frame_index,zone_label):
+        key=(event.camera_id,event.zone_id,event.track_id)
+        if event.state is ParkingState.ILLEGALLY_PARKED and key in self.active: return
+        if event.state is ParkingState.CLEARED and key not in self.active: return
+        if event.state not in (ParkingState.ILLEGALLY_PARKED,ParkingState.CLEARED): return
+        if event.state is ParkingState.ILLEGALLY_PARKED: self.active.add(key)
+        else: self.active.discard(key)
+        if not self.enabled: return
+        payload=event.to_dict()|{"frame_index":frame_index,"zone_label":zone_label}
+        try:
+            response=requests.post(self.url,json=payload,timeout=5); response.raise_for_status(); body=response.json()
+            alert=body.get("alert") or {}; self.results[key]={"alert_id":alert.get("alert_id"),"status":alert.get("status"),"last_video_time_s":event.source_time_s}
+            print(f"Published restricted parking {event.state.value}: {alert.get('alert_id')} track #{event.track_id}",flush=True)
+        except requests.RequestException as error:
+            print(f"WARNING: restricted-parking publish failed; inference continues: {error}",flush=True)
 
 
 def polygon_points(zone,width,height): return np.asarray([(round(x*(width-1)),round(y*(height-1))) for x,y in zone.polygon],np.int32)
@@ -90,7 +116,7 @@ def main():
     capture.set(cv2.CAP_PROP_POS_FRAMES,0)
     from cv.traffic_state.detector import BMD45TrafficDetector
     detector=BMD45TrafficDetector(ROOT/"weights/traffic/bmd45-yolov12s.pt",device=args.device,image_size=args.imgsz)
-    tracker=TrafficByteTracker(); engine=RestrictedParkingEngine(config); repository=InMemoryAlertRepository(); service=AlertService(repository)
+    tracker=TrafficByteTracker(); engine=RestrictedParkingEngine(config); repository=InMemoryAlertRepository(); service=AlertService(repository); publisher=ParkingPublisher(args.backend_url,not args.no_publish)
     writer=cv2.VideoWriter(str(output/"restricted_parking_annotated.mp4"),cv2.VideoWriter_fourcc(*"mp4v"),fps,(width,height)) if args.write_video else None
     base=datetime(2026,1,1,tzinfo=UTC); frame_index=0; start_clock=time.perf_counter(); segmentation_ms=[]; cached_mask_ms=[]; contact_debug={}; state_tracks={state:set() for state in ParkingState}
     while args.max_frames is None or frame_index<args.max_frames:
@@ -103,6 +129,8 @@ def main():
         for track in tracks:
             observations.append(ParkingObservation(track.track_id,track.bbox,track.detection_confidence,tracker.display_class(track.track_id),tracker.raw_class(track.track_id),tracker.class_confidence(track.track_id)))
         cache_started=time.perf_counter(); parking_events=engine.update(observations,source_time_s=source_time,width=width,height=height,semantic_result=semantic_result); cached_mask_ms.append((time.perf_counter()-cache_started)*1000); service.process_parking_events(parking_events)
+        zone_labels={zone.zone_id:zone.label for zone in config.zones}
+        for event in parking_events: publisher.observe(event,frame_index,zone_labels.get(event.zone_id,event.zone_id.replace("_"," ")))
         for track in tracks:
             for zone in config.zones: state_tracks[engine.state(track.track_id,zone.zone_id)].add(track.track_id)
         if args.show_semantic_mask and semantic_result is not None:
@@ -142,10 +170,17 @@ def main():
             if cv2.waitKey(1)&0xff==ord("q"): break
         frame_index+=1
     tracker.finalize_all(); capture.release()
-    if writer: writer.release()
+    if writer:
+        writer.release(); video_path=output/"restricted_parking_annotated.mp4"; browser_path=output/"restricted_parking_annotated.browser.mp4"
+        try:
+            subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(),"-y","-v","error","-i",str(video_path),"-an","-c:v","libx264","-preset","fast","-crf","22","-pix_fmt","yuv420p","-movflags","+faststart",str(browser_path)],check=True)
+            browser_path.replace(video_path)
+        except (OSError,subprocess.CalledProcessError) as error:
+            browser_path.unlink(missing_ok=True); print(f"WARNING: browser video conversion failed: {error}")
     cv2.destroyAllWindows(); alerts=[x.to_dict() for x in repository.list()]
     (output/"restricted_parking_alerts.json").write_text(json.dumps(alerts,indent=2),encoding="utf-8")
     (output/"ground_contact_debug.json").write_text(json.dumps(list(contact_debug.values()),indent=2),encoding="utf-8")
+    (output/"parking_publish_results.json").write_text(json.dumps([{"camera_id":key[0],"zone_id":key[1],"track_id":key[2],**value} for key,value in publisher.results.items()],indent=2),encoding="utf-8")
     elapsed=time.perf_counter()-start_clock
     print(f"frames_processed: {frame_index}\nalerts: {len(alerts)}\nactive: {sum(x['status']!='CLEARED' for x in alerts)}")
     print(f"combined_pipeline_fps: {frame_index/elapsed if elapsed else 0:.3f}\nsegmentation_refreshes: {len(segmentation_ms)}\nmean_segmentation_ms: {sum(segmentation_ms)/len(segmentation_ms) if segmentation_ms else 0:.2f}")

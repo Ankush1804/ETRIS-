@@ -19,6 +19,8 @@ from backend.api.analytics import router as analytics_router
 from backend.api.anpr import router
 from backend.api.signal_control import router as signal_control_router
 from backend.api.stage9 import router as stage9_router
+from backend.api.videos import VideoJobStore
+from backend.api.videos import router as videos_router
 from backend.api.watchlist import router as watchlist_router
 from backend.database.runtime import build_storage_runtime
 from backend.streaming.anpr_stream import ANPRStreamService
@@ -43,6 +45,7 @@ def create_app(*, stream_service=None) -> FastAPI:
         if app.state.storage.session_factory is not None else InMemoryWatchlistRepository())
     app.state.blacklist_ingestor = BlacklistAlertIngestor(
         BlacklistedVehicleAlertHandler(app.state.alert_repository,app.state.watchlist_repository))
+    app.state.video_jobs = VideoJobStore()
     def completed_sink(completed):
         app.state.storage.ingestor.submit(completed); app.state.blacklist_ingestor.submit(completed)
     app.state.anpr_stream = stream_service or ANPRStreamService(
@@ -59,6 +62,7 @@ def create_app(*, stream_service=None) -> FastAPI:
     app.include_router(signal_control_router)
     app.include_router(alerts_router)
     app.include_router(watchlist_router)
+    app.include_router(videos_router)
 
     @app.on_event("shutdown")
     def stop_stream() -> None:

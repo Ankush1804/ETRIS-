@@ -3,7 +3,7 @@ from pathlib import Path
 from backend.config.loader import load_model_config
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_VIDEO = ROOT / "cv/data/video/traffic.mp4"
+DEFAULT_VIDEO = ROOT / "traffic_2.mp4"
 DEFAULT_OUTPUT = ROOT / "runs/anpr_demo/annotated_traffic.mp4"
 DEFAULT_EVENTS = ROOT / "runs/anpr_demo/annotated_traffic_events.json"
 

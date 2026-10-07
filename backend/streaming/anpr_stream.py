@@ -235,6 +235,24 @@ class ANPRStreamService:
         with self._condition:
             self._processing_rate = rate
 
+    def replace_video(self, video: str | Path) -> None:
+        """Switch the live pipeline to a validated server-side video source."""
+        source = Path(video).resolve()
+        if not source.is_file():
+            raise FileNotFoundError(f"Video source not found: {source}")
+        capture = cv2.VideoCapture(str(source))
+        readable = capture.isOpened() and int(capture.get(cv2.CAP_PROP_FRAME_COUNT)) > 0
+        capture.release()
+        if not readable:
+            raise ValueError(f"Video source is not readable: {source.name}")
+        with self._condition:
+            self.video = source
+            if self._started_once:
+                self._request_restart_locked()
+                self._playback_state, self._pipeline_status = "PLAYING", "RUNNING"
+                self._condition.notify_all()
+        self.start()
+
 
     def reset_state(self, *, clear_events: bool = True) -> None:
         with self._condition:

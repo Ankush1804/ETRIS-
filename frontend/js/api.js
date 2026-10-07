@@ -21,7 +21,10 @@
         signal: controller.signal,
         headers: { 'Accept': 'application/json', ...(options.headers || {}) }
       });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      if (!response.ok) {
+        let detail='';try{const body=await response.clone().json();detail=body.detail||'';}catch{}
+        throw new Error(detail||`${response.status} ${response.statusText}`);
+      }
       const type = response.headers.get('content-type') || '';
       return type.includes('application/json') ? response.json() : response.text();
     } finally { clearTimeout(timeout); }
@@ -81,7 +84,17 @@
     alerts: {
       list: (params = {}) => request('/api/alerts' + query(params)),
       active: (params = {}) => request('/api/alerts/active' + query(params)),
-      get: id => request(`/api/alerts/${encodeURIComponent(id)}`)
+      get: id => request(`/api/alerts/${encodeURIComponent(id)}`),
+      accidentEvidenceUrl: () => base + '/api/alerts/accident/evidence',
+      restrictedParkingEvidenceUrl: () => base + '/api/alerts/restricted-parking/evidence'
+    },
+    videos: {
+      upload: file => { const body=new FormData();body.append('file',file);return request('/api/videos/upload',{method:'POST',body,timeoutMs:120000}); },
+      run: (videoId,pipelineType) => request(`/api/videos/${encodeURIComponent(videoId)}/run`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pipeline_type:pipelineType}),timeoutMs:15000}),
+      job: jobId => request(`/api/videos/jobs/${encodeURIComponent(jobId)}`,{timeoutMs:10000}),
+      videoUrl: jobId => base+`/api/videos/jobs/${encodeURIComponent(jobId)}/video`,
+      events: jobId => request(`/api/videos/jobs/${encodeURIComponent(jobId)}/events`,{timeoutMs:15000}),
+      summary: jobId => request(`/api/videos/jobs/${encodeURIComponent(jobId)}/summary`,{timeoutMs:15000})
     },
     watchlist: {
       list: () => request('/api/watchlist'),

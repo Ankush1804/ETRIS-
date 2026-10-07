@@ -1,0 +1,7 @@
+path: c:/projects/traffic-analytics-system/data/datasets/plate_detection_combined
+train: train/images
+val: valid/images
+test: test/images
+nc: 1
+names:
+  - license_plate

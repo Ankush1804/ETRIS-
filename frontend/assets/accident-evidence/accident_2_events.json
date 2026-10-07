@@ -1,0 +1,840 @@
+{
+  "model": "B:\\ETRIS ultimate AI\\weights\\epoch61.pt",
+  "model_classes": {
+    "0": "accident",
+    "1": "vehicle"
+  },
+  "video": "B:\\ETRIS ultimate AI\\cv\\data\\video\\accident_2.mp4",
+  "source_fps": 30.0,
+  "frames_processed": 189,
+  "processing_fps": 5.696,
+  "final_classification": "ACCIDENT_CONFIRMED",
+  "published_alert_id": "ACC-9656A68F1BAE",
+  "strongest_event": {
+    "frame_index": 72,
+    "video_time_s": 2.4,
+    "state": "ACCIDENT_CONFIRMED",
+    "accident_model_confidence": 0.8396,
+    "vehicle_ids": [
+      7,
+      2
+    ],
+    "logical_vehicle_ids": [
+      2,
+      5
+    ],
+    "geometry": {
+      "iou": 0.0315,
+      "edge_gap_px": 0.0,
+      "normalized_gap": 0.0,
+      "expanded_box_iou": 0.1163
+    },
+    "temporal": {
+      "closing_rate": 1.6776,
+      "relative_motion_change": 3.0009,
+      "post_impact_slowdown": 1.0
+    },
+    "score": 89.58,
+    "components": {
+      "accident_model": 54.58,
+      "contact": 12.0,
+      "closing": 8.0,
+      "impact_motion": 5.0,
+      "post_impact": 10.0
+    },
+    "reason_codes": [
+      "ACCIDENT_MODEL",
+      "BOX_CONTACT_OR_NEAR_CONTACT",
+      "RELATIVE_CLOSING_TREND",
+      "ABRUPT_RELATIVE_MOTION_CHANGE",
+      "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+    ]
+  },
+  "events": [
+    {
+      "frame_index": 58,
+      "video_time_s": 1.933,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8593,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1434,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2323
+      },
+      "temporal": {
+        "closing_rate": 3.4574,
+        "relative_motion_change": 2.867,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 80.86,
+      "components": {
+        "accident_model": 55.86,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 59,
+      "video_time_s": 1.967,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8919,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1682,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2592
+      },
+      "temporal": {
+        "closing_rate": 3.3788,
+        "relative_motion_change": 2.956,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 82.97,
+      "components": {
+        "accident_model": 57.97,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 60,
+      "video_time_s": 2.0,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8444,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1789,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2725
+      },
+      "temporal": {
+        "closing_rate": 3.2764,
+        "relative_motion_change": 3.2624,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 79.88,
+      "components": {
+        "accident_model": 54.88,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 61,
+      "video_time_s": 2.033,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8246,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1535,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2385
+      },
+      "temporal": {
+        "closing_rate": 3.103,
+        "relative_motion_change": 3.1031,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 78.6,
+      "components": {
+        "accident_model": 53.6,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 62,
+      "video_time_s": 2.067,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8993,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1224,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2075
+      },
+      "temporal": {
+        "closing_rate": 2.8415,
+        "relative_motion_change": 2.7876,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 83.46,
+      "components": {
+        "accident_model": 58.46,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 63,
+      "video_time_s": 2.1,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.9065,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.112,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.1969
+      },
+      "temporal": {
+        "closing_rate": 2.4115,
+        "relative_motion_change": 2.5284,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 83.92,
+      "components": {
+        "accident_model": 58.92,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 64,
+      "video_time_s": 2.133,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8003,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1435,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2254
+      },
+      "temporal": {
+        "closing_rate": 2.3674,
+        "relative_motion_change": 2.7802,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 77.02,
+      "components": {
+        "accident_model": 52.02,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 65,
+      "video_time_s": 2.167,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8967,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1233,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.2056
+      },
+      "temporal": {
+        "closing_rate": 2.3478,
+        "relative_motion_change": 3.0555,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 83.28,
+      "components": {
+        "accident_model": 58.28,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 66,
+      "video_time_s": 2.2,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.9045,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1103,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.1929
+      },
+      "temporal": {
+        "closing_rate": 2.2685,
+        "relative_motion_change": 3.1606,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 83.79,
+      "components": {
+        "accident_model": 58.79,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 67,
+      "video_time_s": 2.233,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8246,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1121,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.194
+      },
+      "temporal": {
+        "closing_rate": 2.1314,
+        "relative_motion_change": 3.0805,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 78.6,
+      "components": {
+        "accident_model": 53.6,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 68,
+      "video_time_s": 2.267,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8383,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1074,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.1879
+      },
+      "temporal": {
+        "closing_rate": 2.0493,
+        "relative_motion_change": 3.0956,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 79.49,
+      "components": {
+        "accident_model": 54.49,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 69,
+      "video_time_s": 2.3,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8513,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.1054,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.1852
+      },
+      "temporal": {
+        "closing_rate": 2.0056,
+        "relative_motion_change": 3.2199,
+        "post_impact_slowdown": 0.0
+      },
+      "score": 80.34,
+      "components": {
+        "accident_model": 55.34,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 0.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE"
+      ]
+    },
+    {
+      "frame_index": 72,
+      "video_time_s": 2.4,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.8396,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0315,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.1163
+      },
+      "temporal": {
+        "closing_rate": 1.6776,
+        "relative_motion_change": 3.0009,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 89.58,
+      "components": {
+        "accident_model": 54.58,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 73,
+      "video_time_s": 2.433,
+      "state": "ACCIDENT_CANDIDATE",
+      "accident_model_confidence": 0.3072,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0045,
+        "edge_gap_px": 0.0,
+        "normalized_gap": 0.0,
+        "expanded_box_iou": 0.0888
+      },
+      "temporal": {
+        "closing_rate": 1.5434,
+        "relative_motion_change": 2.8773,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 54.97,
+      "components": {
+        "accident_model": 19.97,
+        "contact": 12.0,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 74,
+      "video_time_s": 2.467,
+      "state": "ACCIDENT_CANDIDATE",
+      "accident_model_confidence": 0.3426,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0,
+        "edge_gap_px": 4.58,
+        "normalized_gap": 0.0339,
+        "expanded_box_iou": 0.0655
+      },
+      "temporal": {
+        "closing_rate": 1.4423,
+        "relative_motion_change": 2.8868,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 51.27,
+      "components": {
+        "accident_model": 22.27,
+        "contact": 6,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 75,
+      "video_time_s": 2.5,
+      "state": "ACCIDENT_CANDIDATE",
+      "accident_model_confidence": 0.3778,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0,
+        "edge_gap_px": 7.59,
+        "normalized_gap": 0.0567,
+        "expanded_box_iou": 0.0553
+      },
+      "temporal": {
+        "closing_rate": 1.3341,
+        "relative_motion_change": 2.8329,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 53.56,
+      "components": {
+        "accident_model": 24.56,
+        "contact": 6,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 76,
+      "video_time_s": 2.533,
+      "state": "ACCIDENT_CANDIDATE",
+      "accident_model_confidence": 0.3446,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0,
+        "edge_gap_px": 11.1,
+        "normalized_gap": 0.0839,
+        "expanded_box_iou": 0.0433
+      },
+      "temporal": {
+        "closing_rate": 1.1844,
+        "relative_motion_change": 2.6392,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 51.4,
+      "components": {
+        "accident_model": 22.4,
+        "contact": 6,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 77,
+      "video_time_s": 2.567,
+      "state": "ACCIDENT_CANDIDATE",
+      "accident_model_confidence": 0.4573,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0,
+        "edge_gap_px": 2.38,
+        "normalized_gap": 0.0179,
+        "expanded_box_iou": 0.0651
+      },
+      "temporal": {
+        "closing_rate": 1.1335,
+        "relative_motion_change": 2.3388,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 58.73,
+      "components": {
+        "accident_model": 29.73,
+        "contact": 6,
+        "closing": 8.0,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 79,
+      "video_time_s": 2.633,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.7633,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0,
+        "edge_gap_px": 16.67,
+        "normalized_gap": 0.125,
+        "expanded_box_iou": 0.024
+      },
+      "temporal": {
+        "closing_rate": 0.8456,
+        "relative_motion_change": 2.0479,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 75.38,
+      "components": {
+        "accident_model": 49.61,
+        "contact": 4,
+        "closing": 6.76,
+        "impact_motion": 5.0,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    },
+    {
+      "frame_index": 82,
+      "video_time_s": 2.733,
+      "state": "ACCIDENT_CONFIRMED",
+      "accident_model_confidence": 0.7724,
+      "vehicle_ids": [
+        7,
+        2
+      ],
+      "logical_vehicle_ids": [
+        2,
+        5
+      ],
+      "geometry": {
+        "iou": 0.0,
+        "edge_gap_px": 12.76,
+        "normalized_gap": 0.0931,
+        "expanded_box_iou": 0.0301
+      },
+      "temporal": {
+        "closing_rate": 0.6211,
+        "relative_motion_change": 1.4831,
+        "post_impact_slowdown": 1.0
+      },
+      "score": 76.12,
+      "components": {
+        "accident_model": 50.21,
+        "contact": 6,
+        "closing": 4.97,
+        "impact_motion": 4.94,
+        "post_impact": 10.0
+      },
+      "reason_codes": [
+        "ACCIDENT_MODEL",
+        "BOX_CONTACT_OR_NEAR_CONTACT",
+        "RELATIVE_CLOSING_TREND",
+        "ABRUPT_RELATIVE_MOTION_CHANGE",
+        "POST_IMPACT_PERSISTENCE_SLOWDOWN"
+      ]
+    }
+  ]
+}

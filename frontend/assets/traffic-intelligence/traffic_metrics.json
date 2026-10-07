@@ -1,0 +1,290 @@
+{
+  "traffic_1": {
+    "id": "traffic_1",
+    "cameraName": "Camera 01",
+    "video": "/videos/traffic_1.mp4",
+    "metadata": {
+      "source": "REAL_VIDEO_ESTIMATE",
+      "detector": "BMD-45 + TrafficByteTracker",
+      "snapshotType": "peakDemandSnapshot",
+      "snapshotTimeSec": 0.0,
+      "snapshotSource": "runs/class_export_traffic_1/unique_vehicle_classes.json#peakDemandSnapshot",
+      "existingEventsPeakTimeSec": 0.0,
+      "densityMethod": "mean image-space occupancy",
+      "densityLabel": "Occupancy-derived traffic density",
+      "vehicleCountingMethod": "unique track ID",
+      "processedDurationSec": 21.5215,
+      "volumeMethod": "observed approach entry crossings normalized to one hour",
+      "config": "configs\\traffic_signal_1.json"
+    },
+    "perception": {
+      "vehicles": 76,
+      "cars": 36,
+      "motorcycles": 14,
+      "autos": 6,
+      "buses": 4,
+      "trucks": 4,
+      "others": 12
+    },
+    "trafficState": {
+      "activeVehicles": 18,
+      "density": "HIGH",
+      "densityPercent": 64.71065630608796,
+      "volume": 0.0,
+      "volumeUnit": "veh/hr",
+      "crossings": 0,
+      "queueLength": 0,
+      "occupancy": 0.6471065630608795,
+      "arrivalRate": 0.0,
+      "congestion": "INSUFFICIENT_DATA"
+    },
+    "approaches": [
+      {
+        "id": "APPROACH_A",
+        "name": "MAIN APPROACH",
+        "vehicleCount": 9,
+        "queueLength": 0,
+        "occupancy": 0.6815767871203364,
+        "waitingTime": 0.0,
+        "arrivalRate": 0.0,
+        "heavyVehicleCount": 5,
+        "pressure": 0.17223651806805046,
+        "fairnessBonus": 0.0,
+        "priority": 0.17223651806805046,
+        "recommendedGreen": 19,
+        "crossings": 0,
+        "volume": 0.0,
+        "volumeUnit": "veh/hr"
+      },
+      {
+        "id": "APPROACH_B",
+        "name": "CROSS APPROACH",
+        "vehicleCount": 9,
+        "queueLength": 0,
+        "occupancy": 0.6126363390014227,
+        "waitingTime": 0.0,
+        "arrivalRate": 0.0,
+        "heavyVehicleCount": 0,
+        "pressure": 0.1368954508502134,
+        "fairnessBonus": 0.0,
+        "priority": 0.1368954508502134,
+        "recommendedGreen": 17,
+        "crossings": 0,
+        "volume": 0.0,
+        "volumeUnit": "veh/hr"
+      }
+    ]
+  },
+  "traffic_2": {
+    "id": "traffic_2",
+    "cameraName": "Camera 02",
+    "video": "/videos/traffic_2.mp4",
+    "metadata": {
+      "source": "REAL_VIDEO_ESTIMATE",
+      "detector": "BMD-45 + TrafficByteTracker",
+      "snapshotType": "peakDemandSnapshot",
+      "snapshotTimeSec": 12.0,
+      "snapshotSource": "runs/class_export_traffic_2/unique_vehicle_classes.json#peakDemandSnapshot",
+      "existingEventsPeakTimeSec": 10.0,
+      "densityMethod": "mean image-space occupancy",
+      "densityLabel": "Occupancy-derived traffic density",
+      "vehicleCountingMethod": "unique track ID",
+      "processedDurationSec": 21.6,
+      "volumeMethod": "observed approach entry crossings normalized to one hour",
+      "config": "configs\\traffic_signal_5.json"
+    },
+    "perception": {
+      "vehicles": 39,
+      "cars": 6,
+      "motorcycles": 1,
+      "autos": 1,
+      "buses": 10,
+      "trucks": 7,
+      "others": 14
+    },
+    "trafficState": {
+      "activeVehicles": 4,
+      "density": "HIGH",
+      "densityPercent": 52.648348250018195,
+      "volume": 3499.9999999999995,
+      "volumeUnit": "veh/hr",
+      "crossings": 21,
+      "queueLength": 0,
+      "occupancy": 0.526483482500182,
+      "arrivalRate": 30.0,
+      "congestion": "INSUFFICIENT_DATA"
+    },
+    "approaches": [
+      {
+        "id": "INBOUND_MAIN",
+        "name": "INBOUND MAIN ROAD",
+        "vehicleCount": 4,
+        "queueLength": 0,
+        "occupancy": 0.526483482500182,
+        "waitingTime": 0.0,
+        "arrivalRate": 30.0,
+        "heavyVehicleCount": 1,
+        "pressure": 0.2039725223750273,
+        "fairnessBonus": 0.0,
+        "priority": 0.2039725223750273,
+        "recommendedGreen": 20,
+        "crossings": 21,
+        "volume": 3499.9999999999995,
+        "volumeUnit": "veh/hr"
+      }
+    ]
+  },
+  "traffic_3": {
+    "id": "traffic_3",
+    "cameraName": "Camera 03",
+    "video": "/videos/traffic_3.mp4",
+    "metadata": {
+      "source": "REAL_VIDEO_ESTIMATE",
+      "detector": "BMD-45 + TrafficByteTracker",
+      "snapshotType": "peakDemandSnapshot",
+      "snapshotTimeSec": 8.0,
+      "snapshotSource": "runs/class_export_traffic_3/unique_vehicle_classes.json#peakDemandSnapshot",
+      "existingEventsPeakTimeSec": 8.0,
+      "densityMethod": "mean image-space occupancy",
+      "densityLabel": "Occupancy-derived traffic density",
+      "vehicleCountingMethod": "unique track ID",
+      "processedDurationSec": 34.06666666666667,
+      "volumeMethod": "observed approach entry crossings normalized to one hour",
+      "config": "configs\\traffic_signal_3.json"
+    },
+    "perception": {
+      "vehicles": 225,
+      "cars": 48,
+      "motorcycles": 94,
+      "autos": 35,
+      "buses": 0,
+      "trucks": 8,
+      "others": 40
+    },
+    "trafficState": {
+      "activeVehicles": 35,
+      "density": "LOW",
+      "densityPercent": 23.9488764987966,
+      "volume": 9193.737769080233,
+      "volumeUnit": "veh/hr",
+      "crossings": 87,
+      "queueLength": 1,
+      "occupancy": 0.239488764987966,
+      "arrivalRate": 52.0,
+      "congestion": "INSUFFICIENT_DATA"
+    },
+    "approaches": [
+      {
+        "id": "APPROACH_A",
+        "name": "MAIN CARRIAGEWAY",
+        "vehicleCount": 22,
+        "queueLength": 0,
+        "occupancy": 0.33728447042940013,
+        "waitingTime": 0.0,
+        "arrivalRate": 40.0,
+        "heavyVehicleCount": 0,
+        "pressure": 0.26059267056441004,
+        "fairnessBonus": 0.0,
+        "priority": 0.26059267056441004,
+        "recommendedGreen": 23,
+        "crossings": 64,
+        "volume": 6763.209393346379,
+        "volumeUnit": "veh/hr"
+      },
+      {
+        "id": "APPROACH_B",
+        "name": "SERVICE CARRIAGEWAY",
+        "vehicleCount": 13,
+        "queueLength": 1,
+        "occupancy": 0.14169305954653186,
+        "waitingTime": 1.666666666666667,
+        "arrivalRate": 12.0,
+        "heavyVehicleCount": 0,
+        "pressure": 0.14180951448753534,
+        "fairnessBonus": 0.0,
+        "priority": 0.14180951448753534,
+        "recommendedGreen": 17,
+        "crossings": 23,
+        "volume": 2430.528375733855,
+        "volumeUnit": "veh/hr"
+      }
+    ]
+  },
+  "cam_1": {
+    "id": "cam_1",
+    "cameraName": "CAM 1",
+    "video": "/videos/cam_1_annotated.mp4",
+    "metadata": {
+      "source": "REAL_VIDEO_ESTIMATE",
+      "detector": "BMD-45 + TrafficByteTracker",
+      "snapshotType": "videoSynchronizedEvent",
+      "snapshotTimeSec": 0.0,
+      "snapshotSource": "runs/class_export_cam_1/unique_vehicle_classes.json#peakDemandSnapshot",
+      "densityMethod": "mean image-space occupancy",
+      "densityLabel": "Occupancy-derived traffic density",
+      "vehicleCountingMethod": "unique track ID",
+      "processedDurationSec": 21.5215,
+      "volumeMethod": "observed approach entry crossings normalized to one hour",
+      "config": "B:\\ETRIS ultimate AI\\configs\\traffic_signal_1.json"
+    },
+    "perception": {
+      "vehicles": 76,
+      "cars": 36,
+      "motorcycles": 14,
+      "autos": 6,
+      "buses": 4,
+      "trucks": 4,
+      "others": 12
+    },
+    "trafficState": {
+      "activeVehicles": 18,
+      "density": "HIGH",
+      "densityPercent": 64.71065630608796,
+      "volume": 0.0,
+      "volumeUnit": "veh/hr",
+      "crossings": 0,
+      "queueLength": 0,
+      "occupancy": 0.6471065630608795,
+      "arrivalRate": 0.0,
+      "congestion": "INSUFFICIENT_DATA"
+    },
+    "approaches": [
+      {
+        "id": "APPROACH_A",
+        "name": "MAIN APPROACH",
+        "vehicleCount": 9,
+        "queueLength": 0,
+        "occupancy": 0.6815767871203364,
+        "waitingTime": 0.0,
+        "arrivalRate": 0.0,
+        "heavyVehicleCount": 5,
+        "pressure": 0.17223651806805046,
+        "fairnessBonus": 0.0,
+        "priority": 0.17223651806805046,
+        "recommendedGreen": 19,
+        "crossings": 0,
+        "volume": 0.0,
+        "volumeUnit": "veh/hr"
+      },
+      {
+        "id": "APPROACH_B",
+        "name": "CROSS APPROACH",
+        "vehicleCount": 9,
+        "queueLength": 0,
+        "occupancy": 0.6126363390014227,
+        "waitingTime": 0.0,
+        "arrivalRate": 0.0,
+        "heavyVehicleCount": 0,
+        "pressure": 0.1368954508502134,
+        "fairnessBonus": 0.0,
+        "priority": 0.1368954508502134,
+        "recommendedGreen": 17,
+        "crossings": 0,
+        "volume": 0.0,
+        "volumeUnit": "veh/hr"
+      }
+    ],
+    "events": "/data/cam_1_events.json",
+    "rawVideo": "/videos/cam_1.mp4"
+  }
+}

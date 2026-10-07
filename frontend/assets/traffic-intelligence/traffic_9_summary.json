@@ -1,0 +1,106 @@
+{
+  "source": "BMD-45 + TrafficByteTracker",
+  "counting_method": "unique_track_id",
+  "processed_video_duration_seconds": 9.32,
+  "frames_processed": 233,
+  "config": "configs\\traffic_signal_1.json",
+  "approach_flows": {
+    "APPROACH_A": {
+      "crossings": 5,
+      "volume": 1931.3304721030042,
+      "volumeUnit": "veh/hr"
+    },
+    "APPROACH_B": {
+      "crossings": 0,
+      "volume": 0.0,
+      "volumeUnit": "veh/hr"
+    }
+  },
+  "crossings": 5,
+  "volume": 1931.3304721030042,
+  "volumeUnit": "veh/hr",
+  "peakDemandSnapshot": {
+    "source": "REAL_VIDEO_ESTIMATE",
+    "video_time_s": 4.0,
+    "frame_index": 100,
+    "approaches": [
+      {
+        "approach_id": "APPROACH_A",
+        "label": "MAIN_APPROACH",
+        "vehicle_count": 6,
+        "queue_length": 0,
+        "occupancy": 0.13093054229280796,
+        "arrival_rate_vpm": 6.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_A",
+          "pressure": 0.0696395813439212,
+          "effective_priority": 0.0696395813439212,
+          "green_duration_s": 13,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      },
+      {
+        "approach_id": "APPROACH_B",
+        "label": "CROSS_APPROACH",
+        "vehicle_count": 1,
+        "queue_length": 0,
+        "occupancy": 0.014396043628480456,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_B",
+          "pressure": 0.0071594065442720685,
+          "effective_priority": 0.0071594065442720685,
+          "green_duration_s": 10,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      }
+    ],
+    "phase_order": [
+      "APPROACH_A",
+      "APPROACH_B"
+    ],
+    "cycle_duration_s": 31,
+    "limitations": "Image-space occupancy and slow/stationary congestion estimate; not verified physical lane occupancy or red-signal queue length."
+  },
+  "controller_limits": {
+    "minGreen": 10,
+    "maxGreen": 60
+  },
+  "scope": "tracks observed inside at least one configured traffic approach",
+  "unique_vehicles": 45,
+  "class_counts_raw": {
+    "Auto-rickshaw": 4,
+    "Car": 31,
+    "LCV": 1,
+    "Motorcycle": 4,
+    "Van": 2,
+    "Vehicle": 3
+  },
+  "perception": {
+    "vehicles": 45,
+    "cars": 31,
+    "motorcycles": 4,
+    "autos": 4,
+    "buses": 0,
+    "trucks": 1,
+    "others": 5
+  },
+  "tracker_diagnostics": {
+    "tracks_created": 48,
+    "tracks_expired": 30
+  }
+}

@@ -22,17 +22,13 @@ def load_yaml(filename: str) -> dict[str, Any]:
         with path.open("r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
     except yaml.YAMLError as exc:
-        raise ConfigurationError(
-            f"Invalid YAML in {path}: {exc}"
-        ) from exc
+        raise ConfigurationError(f"Invalid YAML in {path}: {exc}") from exc
 
     if data is None:
         return {}
 
     if not isinstance(data, dict):
-        raise ConfigurationError(
-            f"Configuration root must be a mapping: {path}"
-        )
+        raise ConfigurationError(f"Configuration root must be a mapping: {path}")
 
     return data
 

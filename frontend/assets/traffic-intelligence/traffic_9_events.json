@@ -1,0 +1,287 @@
+[
+  {
+    "source": "REAL_VIDEO_ESTIMATE",
+    "video_time_s": 0.0,
+    "frame_index": 0,
+    "approaches": [
+      {
+        "approach_id": "APPROACH_A",
+        "label": "MAIN_APPROACH",
+        "vehicle_count": 8,
+        "queue_length": 0,
+        "occupancy": 0.13959809686552413,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_A",
+          "pressure": 0.06093971452982862,
+          "effective_priority": 0.06093971452982862,
+          "green_duration_s": 13,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      },
+      {
+        "approach_id": "APPROACH_B",
+        "label": "CROSS_APPROACH",
+        "vehicle_count": 2,
+        "queue_length": 0,
+        "occupancy": 0.020730302825011857,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_B",
+          "pressure": 0.013109545423751779,
+          "effective_priority": 0.013109545423751779,
+          "green_duration_s": 11,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      }
+    ],
+    "phase_order": [
+      "APPROACH_A",
+      "APPROACH_B"
+    ],
+    "cycle_duration_s": 32,
+    "limitations": "Image-space occupancy and slow/stationary congestion estimate; not verified physical lane occupancy or red-signal queue length."
+  },
+  {
+    "source": "REAL_VIDEO_ESTIMATE",
+    "video_time_s": 2.0,
+    "frame_index": 50,
+    "approaches": [
+      {
+        "approach_id": "APPROACH_A",
+        "label": "MAIN_APPROACH",
+        "vehicle_count": 5,
+        "queue_length": 0,
+        "occupancy": 0.08465053358127692,
+        "arrival_rate_vpm": 2.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_A",
+          "pressure": 0.044364246703858204,
+          "effective_priority": 0.044364246703858204,
+          "green_duration_s": 12,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      },
+      {
+        "approach_id": "APPROACH_B",
+        "label": "CROSS_APPROACH",
+        "vehicle_count": 3,
+        "queue_length": 0,
+        "occupancy": 0.053019781857597724,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_B",
+          "pressure": 0.022952967278639658,
+          "effective_priority": 0.022952967278639658,
+          "green_duration_s": 11,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      }
+    ],
+    "phase_order": [
+      "APPROACH_A",
+      "APPROACH_B"
+    ],
+    "cycle_duration_s": 31,
+    "limitations": "Image-space occupancy and slow/stationary congestion estimate; not verified physical lane occupancy or red-signal queue length."
+  },
+  {
+    "source": "REAL_VIDEO_ESTIMATE",
+    "video_time_s": 4.0,
+    "frame_index": 100,
+    "approaches": [
+      {
+        "approach_id": "APPROACH_A",
+        "label": "MAIN_APPROACH",
+        "vehicle_count": 6,
+        "queue_length": 0,
+        "occupancy": 0.13093054229280796,
+        "arrival_rate_vpm": 6.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_A",
+          "pressure": 0.0696395813439212,
+          "effective_priority": 0.0696395813439212,
+          "green_duration_s": 13,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      },
+      {
+        "approach_id": "APPROACH_B",
+        "label": "CROSS_APPROACH",
+        "vehicle_count": 1,
+        "queue_length": 0,
+        "occupancy": 0.014396043628480456,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_B",
+          "pressure": 0.0071594065442720685,
+          "effective_priority": 0.0071594065442720685,
+          "green_duration_s": 10,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      }
+    ],
+    "phase_order": [
+      "APPROACH_A",
+      "APPROACH_B"
+    ],
+    "cycle_duration_s": 31,
+    "limitations": "Image-space occupancy and slow/stationary congestion estimate; not verified physical lane occupancy or red-signal queue length."
+  },
+  {
+    "source": "REAL_VIDEO_ESTIMATE",
+    "video_time_s": 6.0,
+    "frame_index": 150,
+    "approaches": [
+      {
+        "approach_id": "APPROACH_A",
+        "label": "MAIN_APPROACH",
+        "vehicle_count": 6,
+        "queue_length": 0,
+        "occupancy": 0.1162067983448091,
+        "arrival_rate_vpm": 6.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_A",
+          "pressure": 0.06743101975172136,
+          "effective_priority": 0.06743101975172136,
+          "green_duration_s": 13,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      },
+      {
+        "approach_id": "APPROACH_B",
+        "label": "CROSS_APPROACH",
+        "vehicle_count": 1,
+        "queue_length": 0,
+        "occupancy": 0.01470654653027121,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_B",
+          "pressure": 0.007205981979540681,
+          "effective_priority": 0.007205981979540681,
+          "green_duration_s": 10,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      }
+    ],
+    "phase_order": [
+      "APPROACH_A",
+      "APPROACH_B"
+    ],
+    "cycle_duration_s": 31,
+    "limitations": "Image-space occupancy and slow/stationary congestion estimate; not verified physical lane occupancy or red-signal queue length."
+  },
+  {
+    "source": "REAL_VIDEO_ESTIMATE",
+    "video_time_s": 8.0,
+    "frame_index": 200,
+    "approaches": [
+      {
+        "approach_id": "APPROACH_A",
+        "label": "MAIN_APPROACH",
+        "vehicle_count": 5,
+        "queue_length": 0,
+        "occupancy": 0.1217729640984403,
+        "arrival_rate_vpm": 8.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_A",
+          "pressure": 0.06993261128143272,
+          "effective_priority": 0.06993261128143272,
+          "green_duration_s": 13,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      },
+      {
+        "approach_id": "APPROACH_B",
+        "label": "CROSS_APPROACH",
+        "vehicle_count": 0,
+        "queue_length": 0,
+        "occupancy": 0.0,
+        "arrival_rate_vpm": 0.0,
+        "average_waiting_time_s": 0.0,
+        "heavy_vehicle_count": 0,
+        "queued_track_ids": [],
+        "controller": {
+          "intersection_id": "INDIA-DEMO-01",
+          "approach_id": "APPROACH_B",
+          "pressure": 0.0,
+          "effective_priority": 0.0,
+          "green_duration_s": 10,
+          "fairness_applied": false,
+          "reason_codes": [
+            "LOW_DEMAND"
+          ]
+        }
+      }
+    ],
+    "phase_order": [
+      "APPROACH_A",
+      "APPROACH_B"
+    ],
+    "cycle_duration_s": 31,
+    "limitations": "Image-space occupancy and slow/stationary congestion estimate; not verified physical lane occupancy or red-signal queue length."
+  }
+]

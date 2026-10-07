@@ -62,6 +62,9 @@ def args():
     )
 
     parser.add_argument("--imgsz", type=int, default=960)
+    parser.add_argument("--max-width", type=int, help="Downscale wide input before inference and output encoding")
+    parser.add_argument("--frame-stride", type=int, default=1, help="Analyze every Nth frame while preserving video time")
+    parser.add_argument("--progress-file", type=Path, help="Write real frame progress for API clients")
 
     # NEW:
     # Hides approach polygons / queue polygons / entry lines ONLY
@@ -169,10 +172,13 @@ def draw_regions(image, config, hide=False):
 
 def main():
     options=args(); video=Path(options.video); config=load_traffic_state_config(options.config)
+    if options.frame_stride < 1: raise ValueError("--frame-stride must be at least 1")
     if not video.is_file(): raise FileNotFoundError(f"Video not found: {video}")
     output=Path(options.output_dir); output.mkdir(parents=True,exist_ok=True)
     capture=cv2.VideoCapture(str(video)); fps=float(capture.get(cv2.CAP_PROP_FPS)) or 30.0
     width,height=int(capture.get(cv2.CAP_PROP_FRAME_WIDTH)),int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    if options.max_width and width > options.max_width:
+        scale=options.max_width/width; width,height=options.max_width,max(2,int(round(height*scale/2)*2))
     total=int(capture.get(cv2.CAP_PROP_FRAME_COUNT)); ok,first=capture.read()
     if not ok: raise RuntimeError(f"Unable to read video: {video}")
     if options.calibration_preview:
@@ -189,12 +195,16 @@ def main():
     extractor=TrafficStateExtractor(config); controller=AdaptiveSignalController()
     writer=None
     if options.write_video:
-        writer=cv2.VideoWriter(str(output/"traffic_signal_annotated.mp4"),cv2.VideoWriter_fourcc(*"mp4v"),fps,(width,height))
+        writer=cv2.VideoWriter(str(output/"traffic_signal_annotated.mp4"),cv2.VideoWriter_fourcc(*"mp4v"),fps/options.frame_stride,(width,height))
+    if options.write_video and not writer.isOpened(): raise RuntimeError("Cannot open annotated video writer")
     events=[]; stats=defaultdict(lambda:defaultdict(list)); unique=defaultdict(set); crossings=defaultdict(set)
+    unique_track_classes = {}
     last_plan=None; last_phase_order=None; phase_order_changes=0; start_clock=time.perf_counter(); frame_index=0; base=datetime(2026,1,1,tzinfo=UTC)
     while options.max_frames is None or frame_index<options.max_frames:
         ok,image=capture.read()
         if not ok: break
+        if image.shape[1] != width or image.shape[0] != height:
+            image=cv2.resize(image,(width,height),interpolation=cv2.INTER_AREA)
         video_time=frame_index/fps; timestamp=base+timedelta(seconds=video_time)
         packet=FramePacket("SIGNAL-DEMO-CAMERA",frame_index,timestamp,image)
         detections=detector.detect(packet); tracks=tracker.update(detections); state=extractor.update(tracks,frame_index=frame_index,
@@ -220,26 +230,162 @@ def main():
             s=stats[item.approach_id]; s["active"].append(item.active_vehicle_count); s["occupancy"].append(item.image_space_occupancy)
             s["queue"].append(item.queue_length); s["wait"].append(item.average_waiting_time_s); s["heavy"].append(item.heavy_vehicle_count); s["arrival"].append(item.arrival_rate_vpm)
             unique[item.approach_id].update(item.active_track_ids)
-        draw_regions(image,config,hide=options.hide_approach_regions,)
-        decision_map={x.approach_id:x for x in last_plan.ordered_phases} if last_plan else {}
+        # Retain the last stabilized label before expired tracks lose evidence.
         for track in tracks:
-            queued=any(track.track_id in item.queued_track_ids for item in state.approaches); b=track.bbox
-            cv2.rectangle(image,(int(b.x1),int(b.y1)),(int(b.x2),int(b.y2)),(0,80,255) if queued else (80,225,160),2)
-            label=tracker.display_class(track.track_id) if hasattr(tracker,"display_class") else track.class_name
-            cv2.putText(image,f"#{track.track_id} {label} {track.detection_confidence:.2f}",(int(b.x1),max(15,int(b.y1)-4)),cv2.FONT_HERSHEY_SIMPLEX,.4,(255,255,255),1)
-        for index,item in enumerate(state.approaches):
-            d=decision_map.get(item.approach_id); text=f"{item.approach_id} V:{item.active_vehicle_count} Q:{item.queue_length} Occ:{item.image_space_occupancy:.0%} Arr:{item.arrival_rate_vpm:.1f}/m Wait:{item.average_waiting_time_s:.1f}s"
-            if d: text+=f" P:{d.pressure:.3f} Green:{d.green_duration_s}s"
-            cv2.rectangle(image,(10,130+index*32),(min(width-10,900),157+index*32),(5,15,12),-1); cv2.putText(image,text,(18,150+index*32),cv2.FONT_HERSHEY_SIMPLEX,.48,(230,245,240),1)
+            unique_track_classes[track.track_id] = (
+                tracker.display_class(track.track_id)
+                if hasattr(tracker, "display_class") else track.class_name
+            )
+        if writer or not options.no_display:
+            draw_regions(image, config, hide=options.hide_approach_regions)
+            for track in tracks:
+                b = track.bbox
+                queued = any(track.track_id in item.queued_track_ids for item in state.approaches)
+                cv2.rectangle(image, (int(b.x1), int(b.y1)), (int(b.x2), int(b.y2)),
+                              (0, 80, 255) if queued else (80, 225, 160), 2)
+                label = f"#{track.track_id} {unique_track_classes[track.track_id]} {track.detection_confidence:.2f}"
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                (tw, th), baseline = cv2.getTextSize(label, font, .6, 2)
+                x = max(0, min(int(b.x1), width-tw-8))
+                y = max(th+8, min(int(b.y1)-5, height-baseline-4))
+                cv2.rectangle(image, (x, y-th-6), (x+tw+6, y+baseline+3), (8, 18, 24), -1)
+                cv2.putText(image, label, (x+3, y), font, .6, (255, 255, 255), 2, cv2.LINE_AA)
         if writer: writer.write(image)
         if not options.no_display:
             cv2.imshow("ETRIS Traffic State Estimate",image)
             if cv2.waitKey(1)&0xFF==ord("q"): break
-        frame_index+=1
+        for _ in range(options.frame_stride-1): capture.grab()
+        frame_index+=options.frame_stride
+        if options.progress_file and (frame_index == 1 or frame_index % 10 == 0):
+            options.progress_file.parent.mkdir(parents=True,exist_ok=True)
+            options.progress_file.write_text(json.dumps({"frames_processed":frame_index,"total_frames":total,
+                "progress":min(99.,100.*frame_index/max(total,1))}),encoding="utf-8")
     elapsed=time.perf_counter()-start_clock; capture.release(); tracking=tracker.diagnostics(); tracker.finalize_all()
     if writer: writer.release()
+    if options.progress_file:
+        options.progress_file.write_text(json.dumps({"frames_processed":frame_index,"total_frames":total,"progress":100.}),encoding="utf-8")
     cv2.destroyAllWindows()
     if options.write_json: (output/"traffic_state_events.json").write_text(json.dumps(events,indent=2),encoding="utf-8")
+        # ------------------------------------------------------------
+    # Export unique track-level vehicle class counts.
+    # Scope: tracker IDs that appeared in at least one configured
+    # traffic approach. A track is counted only once.
+    # ------------------------------------------------------------
+
+    monitored_track_ids = set()
+
+    for track_ids in unique.values():
+        monitored_track_ids.update(track_ids)
+
+    raw_class_counts = {}
+
+    for track_id in sorted(monitored_track_ids):
+        label = unique_track_classes.get(track_id, "Unknown")
+        raw_class_counts[label] = raw_class_counts.get(label, 0) + 1
+
+    perception = {
+        "vehicles": len(monitored_track_ids),
+        "cars": 0,
+        "motorcycles": 0,
+        "autos": 0,
+        "buses": 0,
+        "trucks": 0,
+        "others": 0,
+    }
+
+    def perception_bucket(label):
+        normalized = (
+            str(label)
+            .strip()
+            .lower()
+            .replace("_", " ")
+            .replace("-", " ")
+        )
+
+        if (
+            "motorcycle" in normalized
+            or "motorbike" in normalized
+            or "two wheeler" in normalized
+            or normalized == "bike"
+        ):
+            return "motorcycles"
+
+        if (
+            "rickshaw" in normalized
+            or "three wheeler" in normalized
+            or normalized == "auto"
+            or "auto rickshaw" in normalized
+        ):
+            return "autos"
+
+        if "bus" in normalized:
+            return "buses"
+
+        if (
+            "truck" in normalized
+            or "lcv" in normalized
+            or "light commercial" in normalized
+        ):
+            return "trucks"
+
+        if (
+            "car" in normalized
+            or "sedan" in normalized
+            or "hatchback" in normalized
+            or "suv" in normalized
+        ):
+            return "cars"
+
+        return "others"
+
+    for label, count in raw_class_counts.items():
+        perception[perception_bucket(label)] += count
+
+    duration = min(frame_index,total) / fps
+    approach_flows = {}
+    for approach in config.approaches:
+        count = extractor.entry_crossing_count(approach.approach_id)
+        approach_flows[approach.approach_id] = {
+            "crossings": count,
+            "volume": count * 3600 / duration if duration > 0 else None,
+            "volumeUnit": "veh/hr",
+        }
+    total_crossings = sum(x["crossings"] for x in approach_flows.values())
+    class_summary = {
+        "source": "BMD-45 + TrafficByteTracker",
+        "counting_method": "unique_track_id",
+        "processed_video_duration_seconds": duration,
+        "frames_processed": frame_index,
+        "config": str(Path(options.config)),
+        "approach_flows": approach_flows,
+        "crossings": total_crossings,
+        "volume": total_crossings * 3600 / duration if duration > 0 else None,
+        "volumeUnit": "veh/hr",
+        "peakDemandSnapshot": max(events, key=lambda event: sum(
+            a["controller"]["pressure"] for a in event["approaches"])),
+        "controller_limits": {"minGreen": controller.config.min_green_s,
+                              "maxGreen": controller.config.max_green_s},
+        "scope": "tracks observed inside at least one configured traffic approach",
+        "unique_vehicles": len(monitored_track_ids),
+        "class_counts_raw": dict(sorted(raw_class_counts.items())),
+        "perception": perception,
+        "tracker_diagnostics": {
+            "tracks_created": tracking.tracks_created,
+            "tracks_expired": tracking.tracks_expired,
+        },
+    }
+
+    class_output = output / "unique_vehicle_classes.json"
+
+    class_output.write_text(
+        json.dumps(class_summary, indent=2),
+        encoding="utf-8",
+    )
+
+    print(f"unique_vehicle_class_summary: {class_output}")
+    print(f"unique_monitored_vehicles: {len(monitored_track_ids)}")
+    print("unique_vehicle_classes:", dict(sorted(raw_class_counts.items())))
+    print("perception_counts:", perception)
     print(f"video: {video}\nresolution: {width}x{height}\nsource_fps: {fps:.3f}\nframes_processed: {frame_index}\nvideo_duration_processed_s: {frame_index/fps:.3f}\nprocessing_fps: {frame_index/elapsed if elapsed else 0:.3f}")
     for approach in config.approaches:
         s=stats[approach.approach_id]; avg=lambda key:sum(s[key])/len(s[key]) if s[key] else 0
