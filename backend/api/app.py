@@ -29,9 +29,10 @@ from backend.streaming.factory import DEFAULT_VIDEO, production_pipeline_factory
 
 def create_app(*, stream_service=None) -> FastAPI:
     app = FastAPI(title="ETRIS Ultimate AI Demo API", version="0.1.0")
+    configured_origins = [value.strip() for value in os.getenv("ETRIS_CORS_ORIGINS", "").split(",") if value.strip()]
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+        allow_origins=configured_origins or ["http://localhost:5173", "http://127.0.0.1:5173"],
         allow_credentials=True,
         allow_methods=["GET", "POST"],
         allow_headers=["*"],

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import threading
@@ -16,8 +17,9 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 ROOT = Path(__file__).resolve().parents[2]
-UPLOAD_DIR = ROOT / "data" / "uploads"
-JOB_DIR = ROOT / "runs" / "video_jobs"
+RUNTIME_ROOT = Path("/tmp/etris") if os.getenv("VERCEL") else ROOT
+UPLOAD_DIR = RUNTIME_ROOT / "data" / "uploads"
+JOB_DIR = RUNTIME_ROOT / "runs" / "video_jobs"
 ALLOWED_EXTENSIONS = {".mp4", ".mov", ".avi", ".mkv"}
 MAX_UPLOAD_BYTES = 2 * 1024 * 1024 * 1024
 

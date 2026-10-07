@@ -1,4 +1,5 @@
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+const localDashboard = ["127.0.0.1", "localhost"].includes(window.location.hostname);
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || (localDashboard ? "http://127.0.0.1:8000" : window.location.origin)).replace(/\/$/, "");
 
 export type DatabaseStatus = {mode: "memory" | "postgresql"; configured: boolean; connected: boolean; last_error: string | null};
 export type ANPRStatus = {backend_online: boolean; mode: "LIVE_ANALYSIS" | "RECORDED_ANALYSIS"; processing_rate: string; running: boolean; frame: number; fps: number; source: string; camera_id: string; pipeline_status: string; error: string | null; playback_state: "PLAYING" | "PAUSED" | "ENDED"; current_frame: number; total_frames: number; current_time_s: number; duration_s: number; source_fps: number; playback_fps: number; inference_fps: number; latest_analyzed_frame: number; database?: DatabaseStatus};

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "api": {
+      "root": ".",
+      "framework": "fastapi",
+      "entrypoint": "backend/api/app.py"
+    },
+    "dashboard": {
+      "root": "frontend",
+      "framework": "other",
+      "outputDirectory": "."
+    },
+    "traffic-intelligence": {
+      "root": "etris-traffic-intelligence",
+      "framework": "vite"
+    },
+    "legacy-anpr": {
+      "root": "frontend_old_backup",
+      "framework": "vite"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/traffic/(.*)",
+      "destination": {
+        "service": "traffic-intelligence"
+      }
+    },
+    {
+      "source": "/legacy/(.*)",
+      "destination": {
+        "service": "legacy-anpr"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "dashboard"
+      }
+    }
+  ]
+}

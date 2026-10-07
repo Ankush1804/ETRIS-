@@ -1,7 +1,8 @@
 (() => {
-  const defaultBase = 'http://127.0.0.1:8000';
+  const localDashboard = ['127.0.0.1', 'localhost'].includes(window.location.hostname) && window.location.port === '5173';
+  const defaultBase = localDashboard ? 'http://127.0.0.1:8000' : window.location.origin;
   const base = (window.ETRIS_API_BASE_URL || localStorage.getItem('etrisApiBase') || defaultBase).replace(/\/$/, '');
-  const anubhavBase = (window.ETRIS_ANUBHAV_API_BASE_URL || localStorage.getItem('etrisAnubhavApiBase') || 'http://127.0.0.1:8001').replace(/\/$/, '');
+  const anubhavBase = (window.ETRIS_ANUBHAV_API_BASE_URL || localStorage.getItem('etrisAnubhavApiBase') || (localDashboard ? 'http://127.0.0.1:8001' : defaultBase)).replace(/\/$/, '');
 
   const query = params => {
     const q = new URLSearchParams(Object.entries(params || {}).filter(([,v]) => v != null && v !== ''));
